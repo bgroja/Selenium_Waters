@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Report</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Test Report</h1>
+    <button id="run1-tests">Run Tests</button>
+    <div id="status"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#run1-tests').click(function() {
+                $('#status').text('Running tests...');
+                $.ajax({
+                    url: '/run1-tests',
+                    type: 'POST',
+                    success: function(response) {
+                        $('#status').text('Tests completed');
+                        var results = response.results;
+                        var failures = response.failures;
+                        var html = '<p>Results: ' + results + '</p>';
+                        html += '<p>Failures: ' + failures + '</p>';
+                        $('#status').append(html);
+                    },
+                    error: function() {
+                        $('#status').text('Error running tests');
+                    }
+                });
+            });
+        });
+</script>
+
+    <h1 style="display: flex; justify-content: center; align-items: center;">Test case for Waters Micro apps</h1>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <table style="width: 100%;">
+        <tr align="left">
+            <th align="center">Test case No</th>
+            <th align="center">Test case Description</th>
+            <th align="right">Result</th>
+        </tr>
+        <tr>
+            <td align="left">1</td>
+            <td align="center">URL load</td>
+            <td align="right">{{UrlAccessMessage}}</td>
+        </tr>
+        <tr>
+            <td align="left">2</td>
+            <td align="center">login</td>
+            <td align="right">{{ loginMessage }}</td>
+        </tr>
+    </table>
+</body>
+</html>
